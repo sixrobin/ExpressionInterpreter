@@ -7,6 +7,18 @@ namespace ExpressionInterpreter
     {
         private const char CHAR_END = '\0';
         
+        private static readonly Dictionary<char, Token> SHARED_TOKENS = new Dictionary<char, Token>()
+        {
+            {'+', new Token(Token.TokenType.PLUS, "+")},
+            {'-', new Token(Token.TokenType.MINUS, "-")},
+            {'*', new Token(Token.TokenType.MULTIPLY, "*")},
+            {'/', new Token(Token.TokenType.DIVIDE, "/")},
+            {'%', new Token(Token.TokenType.MODULO, "%")},
+            {'^', new Token(Token.TokenType.POWER, "^")},
+            {'(', new Token(Token.TokenType.OPEN_PARENTHESIS, "(")},
+            {')', new Token(Token.TokenType.CLOSE_PARENTHESIS, ")")},
+        };
+        
         public Lexer(string text)
         {
             _text = text;
@@ -71,39 +83,14 @@ namespace ExpressionInterpreter
                 {
                     tokens.Add(new Token(Token.TokenType.IDENTIFIER, GetIdentifier()));
                 }
+                else if (SHARED_TOKENS.TryGetValue(GetCurrent(), out Token token))
+                {
+                    tokens.Add(token);
+                    Next();
+                }
                 else
                 {
-                    switch (GetCurrent())
-                    {
-                        case '+':
-                            tokens.Add(new Token(Token.TokenType.PLUS, "+"));
-                            break;
-                        case '-':
-                            tokens.Add(new Token(Token.TokenType.MINUS, "-"));
-                            break;
-                        case '*':
-                            tokens.Add(new Token(Token.TokenType.MULTIPLY, "*"));
-                            break;
-                        case '/':
-                            tokens.Add(new Token(Token.TokenType.DIVIDE, "/"));
-                            break;
-                        case '%':
-                            tokens.Add(new Token(Token.TokenType.MODULO, "%"));
-                            break;
-                        case '^':
-                            tokens.Add(new Token(Token.TokenType.POWER, "^"));
-                            break;
-                        case '(':
-                            tokens.Add(new Token(Token.TokenType.OPEN_PARENTHESIS, "("));
-                            break;
-                        case ')':
-                            tokens.Add(new Token(Token.TokenType.CLOSE_PARENTHESIS, ")"));
-                            break;
-                        default:
-                            throw new Exception($"Unexpected character {GetCurrent()} in {nameof(Lexer)}");
-                    }
-                
-                    Next();
+                    throw new Exception($"Unexpected character {GetCurrent()} in {nameof(Lexer)}");
                 }
             }
 
