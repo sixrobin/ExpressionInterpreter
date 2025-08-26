@@ -35,24 +35,39 @@ namespace ExpressionInterpreter
         
         public Expression ParseAddSubtract()
         {
-            Expression node = ParseMultiplyDivide();
+            Expression node = ParseMultiplyDivideModulo();
 
             while (GetCurrent().Type == Token.TokenType.PLUS || GetCurrent().Type == Token.TokenType.MINUS)
             {
                 string op = GetCurrent().Value;
                 Next();
-                Expression right = ParseMultiplyDivide();
+                Expression right = ParseMultiplyDivideModulo();
                 node = new BinaryExpression(node, right, op);
             }
 
             return node;
         }
 
-        private Expression ParseMultiplyDivide()
+        private Expression ParseMultiplyDivideModulo()
+        {
+            Expression node = ParseExponent();
+
+            while (GetCurrent().Type == Token.TokenType.MULTIPLY || GetCurrent().Type == Token.TokenType.DIVIDE || GetCurrent().Type == Token.TokenType.MODULO)
+            {
+                string op = GetCurrent().Value;
+                Next();
+                Expression right = ParseExponent();
+                node = new BinaryExpression(node, right, op);
+            }
+
+            return node;
+        }
+
+        private Expression ParseExponent()
         {
             Expression node = ParseLeaf();
 
-            while (GetCurrent().Type == Token.TokenType.MULTIPLY || GetCurrent().Type == Token.TokenType.DIVIDE)
+            while (GetCurrent().Type == Token.TokenType.POWER)
             {
                 string op = GetCurrent().Value;
                 Next();
@@ -62,7 +77,7 @@ namespace ExpressionInterpreter
 
             return node;
         }
-
+        
         private Expression ParseLeaf()
         {
             if (GetCurrent().Type == Token.TokenType.NUMBER)

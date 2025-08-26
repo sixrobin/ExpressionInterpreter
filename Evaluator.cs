@@ -34,8 +34,8 @@ namespace ExpressionInterpreter
                         "-" => left - right,
                         "*" => left * right,
                         "/" => right != 0 ? left / right : throw new DivideByZeroException(),
-                        // TODO: Module
-                        // TODO: Power
+                        "%" => left % right,
+                        "^" => Math.Pow(left, right),
                         _ => throw new Exception($"Unknown operator {binary.Operator} to evaluate expression.")
                     };
 

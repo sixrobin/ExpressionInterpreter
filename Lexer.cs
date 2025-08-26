@@ -85,6 +85,12 @@ namespace ExpressionInterpreter
                         case '/':
                             tokens.Add(new Token(Token.TokenType.DIVIDE, "/"));
                             break;
+                        case '%':
+                            tokens.Add(new Token(Token.TokenType.MODULO, "%"));
+                            break;
+                        case '^':
+                            tokens.Add(new Token(Token.TokenType.POWER, "^"));
+                            break;
                         case '(':
                             tokens.Add(new Token(Token.TokenType.OPEN_PARENTHESIS, "("));
                             break;

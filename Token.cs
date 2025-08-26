@@ -10,6 +10,8 @@ namespace ExpressionInterpreter
             MINUS,
             MULTIPLY,
             DIVIDE,
+            MODULO,
+            POWER,
             OPEN_PARENTHESIS,
             CLOSE_PARENTHESIS,
             END,
