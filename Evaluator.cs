@@ -27,16 +27,23 @@ namespace ExpressionInterpreter
                 case BinaryExpression binary:
                     double left = Evaluate(binary.Left);
                     double right = Evaluate(binary.Right);
-
                     return binary.Operator switch
                     {
                         "+" => left + right,
                         "-" => left - right,
                         "*" => left * right,
-                        "/" => right != 0 ? left / right : throw new DivideByZeroException(),
+                        "/" => right != 0.0 ? left / right : throw new DivideByZeroException(),
                         "%" => left % right,
                         "^" => Math.Pow(left, right),
                         _ => throw new Exception($"Unknown operator {binary.Operator} to evaluate expression.")
+                    };
+                
+                case UnaryExpression unary:
+                    return unary.Sign switch
+                    {
+                        "+" => Evaluate(unary.Right),
+                        "-" => -Evaluate(unary.Right),
+                        _ => throw new Exception($"Unknown unary sign {unary.Sign} to evaluate expression.")
                     };
 
                 default:

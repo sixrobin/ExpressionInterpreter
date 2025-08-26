@@ -35,6 +35,18 @@ namespace ExpressionInterpreter
         
         public readonly Expression Left;
         public readonly Expression Right;
-        public readonly string Operator; // TODO: Enum?
+        public readonly string Operator;
+    }
+
+    public class UnaryExpression : Expression
+    {
+        public UnaryExpression(Expression right, string sign)
+        {
+            Right = right;
+            Sign = sign;
+        }
+        
+        public readonly Expression Right;
+        public readonly string Sign;
     }
 }

@@ -5,6 +5,8 @@ namespace ExpressionInterpreter
 
     public class Lexer
     {
+        private const char CHAR_END = '\0';
+        
         public Lexer(string text)
         {
             _text = text;
@@ -15,7 +17,7 @@ namespace ExpressionInterpreter
     
         private char GetCurrent()
         {
-            return _position < _text.Length ? _text[_position] : '\0';
+            return _position < _text.Length ? _text[_position] : CHAR_END;
         }
 
         private void Next()
@@ -57,7 +59,7 @@ namespace ExpressionInterpreter
         {
             List<Token> tokens = new List<Token>();
 
-            while (GetCurrent() != '\0')
+            while (GetCurrent() != CHAR_END)
             {
                 SkipWhitespace();
 

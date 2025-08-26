@@ -80,29 +80,35 @@ namespace ExpressionInterpreter
         
         private Expression ParseLeaf()
         {
-            if (GetCurrent().Type == Token.TokenType.NUMBER)
+            switch (GetCurrent().Type)
             {
-                string value = GetCurrent().Value;
-                Next();
-                return new NumberExpression(value);
+                case Token.TokenType.PLUS:
+                    Next();
+                    return new UnaryExpression(ParseLeaf(), "+");
+                
+                case Token.TokenType.MINUS:
+                    Next();
+                    return new UnaryExpression(ParseLeaf(), "-");
+                
+                case Token.TokenType.NUMBER:
+                    string value = GetCurrent().Value;
+                    Next();
+                    return new NumberExpression(value);
+                
+                case Token.TokenType.IDENTIFIER:
+                    string id = GetCurrent().Value;
+                    Next();
+                    return new IdentifierExpression(id);
+                
+                case Token.TokenType.OPEN_PARENTHESIS:
+                    Next();
+                    Expression expression = ParseAddSubtract();
+                    Next();
+                    return expression;
+                
+                default:
+                    throw new Exception($"Unexpected leaf token {GetCurrent().Type}");
             }
-
-            if (GetCurrent().Type == Token.TokenType.IDENTIFIER)
-            {
-                string value = GetCurrent().Value;
-                Next();
-                return new IdentifierExpression(value);
-            }
-
-            if (GetCurrent().Type == Token.TokenType.OPEN_PARENTHESIS)
-            {
-                Next();
-                Expression expression = ParseAddSubtract();
-                Next();
-                return expression;
-            }
-
-            throw new Exception($"Unexpected leaf token {GetCurrent().Type}");
         }
     }
 }
