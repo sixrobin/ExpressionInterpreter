@@ -47,7 +47,7 @@ namespace ExpressionInterpreter
                     };
 
                 default:
-                    throw new Exception($"Unknown expression type {expression.GetType()}");
+                    throw new Exception($"Unknown expression type {expression.GetType()}.");
             }
         }
     }

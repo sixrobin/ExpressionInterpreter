@@ -107,7 +107,7 @@ namespace ExpressionInterpreter
                     return expression;
                 
                 default:
-                    throw new Exception($"Unexpected leaf token {GetCurrent().Type}");
+                    throw new Exception($"Unexpected leaf token {GetCurrent().Type}.");
             }
         }
     }

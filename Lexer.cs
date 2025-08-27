@@ -90,7 +90,7 @@ namespace ExpressionInterpreter
                 }
                 else
                 {
-                    throw new Exception($"Unexpected character {GetCurrent()} in {nameof(Lexer)}");
+                    throw new Exception($"Unexpected character {GetCurrent()} in {nameof(Lexer)}.");
                 }
             }
 
