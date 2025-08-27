@@ -1,7 +1,7 @@
-using System.Collections.Generic;
-
 namespace ExpressionInterpreter
 {
+    using System.Collections.Generic;
+    
     public abstract class Expression
     {
     }
