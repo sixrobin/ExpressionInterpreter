@@ -1,3 +1,5 @@
+using Godot;
+
 namespace ExpressionInterpreter
 {
     using System;
@@ -98,6 +100,30 @@ namespace ExpressionInterpreter
                 case Token.TokenType.IDENTIFIER:
                     string id = GetCurrent().Value;
                     Next();
+
+                    // Function.
+                    if (GetCurrent().Type == Token.TokenType.OPEN_PARENTHESIS)
+                    {
+                        Next();
+                        List<Expression> args = new List<Expression>();
+                        
+                        if (GetCurrent().Type != Token.TokenType.CLOSE_PARENTHESIS)
+                        {
+                            do
+                            {
+                                args.Add(ParseAddSubtract());
+                                if (GetCurrent().Type == Token.TokenType.COMMA)
+                                    Next();
+                                else
+                                    break;
+                            }
+                            while (true);
+                        }
+
+                        Next();
+                        return new FunctionExpression(id, args);
+                    }
+                    
                     return new IdentifierExpression(id);
                 
                 case Token.TokenType.OPEN_PARENTHESIS:

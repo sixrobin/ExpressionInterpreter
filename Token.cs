@@ -14,6 +14,7 @@ namespace ExpressionInterpreter
             POWER,
             OPEN_PARENTHESIS,
             CLOSE_PARENTHESIS,
+            COMMA,
             END,
         }
     

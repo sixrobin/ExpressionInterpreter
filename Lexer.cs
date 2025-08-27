@@ -17,6 +17,7 @@ namespace ExpressionInterpreter
             {'^', new Token(Token.TokenType.POWER, "^")},
             {'(', new Token(Token.TokenType.OPEN_PARENTHESIS, "(")},
             {')', new Token(Token.TokenType.CLOSE_PARENTHESIS, ")")},
+            {',', new Token(Token.TokenType.COMMA, ",")},
         };
         
         public Lexer(string text)
@@ -94,7 +95,7 @@ namespace ExpressionInterpreter
                 }
             }
 
-            tokens.Add(new Token(Token.TokenType.END, ""));
+            tokens.Add(new Token(Token.TokenType.END, string.Empty));
             return tokens;
         }
     }

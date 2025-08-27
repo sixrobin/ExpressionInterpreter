@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace ExpressionInterpreter
 {
     public abstract class Expression
@@ -48,5 +50,17 @@ namespace ExpressionInterpreter
         
         public readonly Expression Right;
         public readonly string Sign;
+    }
+
+    public class FunctionExpression : Expression
+    {
+        public FunctionExpression(string functionName, List<Expression> args)
+        {
+            FunctionName = functionName;
+            Args = args;
+        }
+        
+        public readonly string FunctionName;
+        public readonly List<Expression> Args;
     }
 }

@@ -10,12 +10,12 @@
 
         public void Run()
         {
-            Lexer lexer = new Lexer("5 / -3 * 2");
+            Lexer lexer = new Lexer("min(5, b)");
             List<Token> tokens = lexer.Tokenize();
             Parser parser = new Parser(tokens);
             Evaluator evaluator = new Evaluator(new Dictionary<string, double>
             {
-                { "b", 4 },
+                { "b", 3 },
             });
 
             double result = evaluator.Evaluate(parser.Parse());

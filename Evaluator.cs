@@ -35,7 +35,7 @@ namespace ExpressionInterpreter
                         "/" => right != 0.0 ? left / right : throw new DivideByZeroException(),
                         "%" => left % right,
                         "^" => Math.Pow(left, right),
-                        _ => throw new Exception($"Unknown operator {binary.Operator} to evaluate expression.")
+                        _   => throw new Exception($"Unknown operator {binary.Operator} to evaluate expression."),
                     };
                 
                 case UnaryExpression unary:
@@ -43,9 +43,23 @@ namespace ExpressionInterpreter
                     {
                         "+" => Evaluate(unary.Right),
                         "-" => -Evaluate(unary.Right),
-                        _ => throw new Exception($"Unknown unary sign {unary.Sign} to evaluate expression.")
+                        _   => throw new Exception($"Unknown unary sign {unary.Sign} to evaluate expression."),
                     };
-
+                
+                case FunctionExpression function:
+                    return function.FunctionName switch
+                    {
+                        "abs"   => Math.Abs(Evaluate(function.Args[0])),
+                        "cos"   => Math.Cos(Evaluate(function.Args[0])),
+                        "sin"   => Math.Sin(Evaluate(function.Args[0])),
+                        "floor" => Math.Floor(Evaluate(function.Args[0])),
+                        "ceil"  => Math.Ceiling(Evaluate(function.Args[0])),
+                        "round" => Math.Round(Evaluate(function.Args[0])),
+                        "min"   => Math.Min(Evaluate(function.Args[0]), Evaluate(function.Args[1])),
+                        "max"   => Math.Max(Evaluate(function.Args[0]), Evaluate(function.Args[1])),
+                        _       => throw new Exception($"Unknown function name {function.FunctionName}"),
+                    };
+                
                 default:
                     throw new Exception($"Unknown expression type {expression.GetType()}");
             }
