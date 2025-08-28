@@ -42,7 +42,7 @@ namespace ExpressionInterpreter
                 string op = GetCurrent().Value;
                 Next();
                 Expression right = ParseMultiplyDivideModulo();
-                node = new BinaryExpression(node, right, op);
+                node = new ExpressionBinary(node, right, op);
             }
 
             return node;
@@ -57,7 +57,7 @@ namespace ExpressionInterpreter
                 string op = GetCurrent().Value;
                 Next();
                 Expression right = ParseExponent();
-                node = new BinaryExpression(node, right, op);
+                node = new ExpressionBinary(node, right, op);
             }
 
             return node;
@@ -72,7 +72,7 @@ namespace ExpressionInterpreter
                 string op = GetCurrent().Value;
                 Next();
                 Expression right = ParseLeaf();
-                node = new BinaryExpression(node, right, op);
+                node = new ExpressionBinary(node, right, op);
             }
 
             return node;
@@ -84,16 +84,16 @@ namespace ExpressionInterpreter
             {
                 case Token.TokenType.PLUS:
                     Next();
-                    return new UnaryExpression(ParseLeaf(), "+");
+                    return new ExpressionUnary(ParseLeaf(), "+");
                 
                 case Token.TokenType.MINUS:
                     Next();
-                    return new UnaryExpression(ParseLeaf(), "-");
+                    return new ExpressionUnary(ParseLeaf(), "-");
                 
                 case Token.TokenType.NUMBER:
                     string value = GetCurrent().Value;
                     Next();
-                    return new NumberExpression(value);
+                    return new ExpressionNumber(value);
                 
                 case Token.TokenType.IDENTIFIER:
                     string id = GetCurrent().Value;
@@ -119,10 +119,10 @@ namespace ExpressionInterpreter
                         }
 
                         Next();
-                        return new FunctionExpression(id, args);
+                        return new ExpressionFunction(id, args);
                     }
                     
-                    return new IdentifierExpression(id);
+                    return new ExpressionIdentifier(id);
                 
                 case Token.TokenType.OPEN_PARENTHESIS:
                     Next();

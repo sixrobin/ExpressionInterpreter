@@ -10,15 +10,21 @@
 
         public void Run()
         {
-            Lexer lexer = new Lexer("min(5, b)");
+            Lexer lexer = new Lexer("min(5, 2) * 4");
             List<Token> tokens = lexer.Tokenize();
             Parser parser = new Parser(tokens);
-            Evaluator evaluator = new Evaluator(new Dictionary<string, double>
+            Expression expression = parser.Parse();
+            
+            EvaluationContext context = new()
             {
-                { "b", 3 },
-            });
+                Variables = new Dictionary<string, double>
+                {
+                    { "b", 3 },
+                },
+            };
 
-            double result = evaluator.Evaluate(parser.Parse());
+            double result = expression.Evaluate();
+            
             Godot.GD.Print(result);
         }
     }
