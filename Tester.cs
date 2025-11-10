@@ -4,9 +4,9 @@
 
     public class Tester
     {
-        public void Run()
+        public double Run()
         {
-            Lexer lexer = new Lexer("min(5, 2) * B");
+            Lexer lexer = new Lexer("randi(1, 3)");
             List<Token> tokens = lexer.Tokenize();
             Parser parser = new Parser(tokens);
             Expression expression = parser.Parse();
@@ -20,9 +20,14 @@
                 },
             };
 
-            double result = expression.Evaluate();
+            double result = expression.Evaluate(new EvaluationContext() {
+                Object = new TestContext(),
+                Variables = new Dictionary<string, double>(),
+            });
             
             Godot.GD.Print(result);
+
+            return result;
         }
     }
 
