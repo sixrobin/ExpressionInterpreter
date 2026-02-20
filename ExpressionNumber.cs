@@ -1,6 +1,6 @@
 ﻿namespace ExpressionInterpreter
 {
-	public class ExpressionNumber : Expression
+	public class ExpressionNumber : AExpression
 	{
 		public ExpressionNumber(string value)
 		{

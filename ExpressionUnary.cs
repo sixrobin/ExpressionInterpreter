@@ -2,15 +2,15 @@
 {
 	using System;
 	
-	public class ExpressionUnary : Expression
+	public class ExpressionUnary : AExpression
 	{
-		public ExpressionUnary(Expression right, string sign)
+		public ExpressionUnary(AExpression right, string sign)
 		{
 			Right = right;
 			Sign = sign;
 		}
         
-		public readonly Expression Right;
+		public readonly AExpression Right;
 		public readonly string Sign;
 		
 		public override double Evaluate(EvaluationContext context)

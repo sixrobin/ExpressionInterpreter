@@ -3,7 +3,7 @@
 	using System;
 	using System.Reflection;
 	
-	public class ExpressionIdentifier : Expression
+	public class ExpressionIdentifier : AExpression
 	{
 		public ExpressionIdentifier(string value)
 		{

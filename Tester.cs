@@ -4,12 +4,12 @@
 
     public class Tester
     {
-        public double Run()
+        public void Run()
         {
             Lexer lexer = new Lexer("randi(1, 3)");
             List<Token> tokens = lexer.Tokenize();
             Parser parser = new Parser(tokens);
-            Expression expression = parser.Parse();
+            AExpression expression = parser.Parse();
             
             EvaluationContext context = new()
             {
@@ -20,14 +20,14 @@
                 },
             };
 
-            double result = expression.Evaluate(new EvaluationContext() {
+            double result1 = expression.Evaluate(new EvaluationContext() {
                 Object = new TestContext(),
                 Variables = new Dictionary<string, double>(),
             });
             
-            Godot.GD.Print(result);
-
-            return result;
+            Godot.GD.Print("Test 1: " + result1);
+            
+            Godot.GD.Print("Test 2: " + new Expression("randi(10, 30)").Evaluate());
         }
     }
 

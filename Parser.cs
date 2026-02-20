@@ -23,9 +23,9 @@ namespace ExpressionInterpreter
             _position++;
         }
         
-        public Expression Parse()
+        public AExpression Parse()
         {
-            Expression expression = ParseAddSubtract();
+            AExpression expression = ParseAddSubtract();
 
             if (GetCurrent().Type != Token.TokenType.END)
                 throw new Exception($"Expected {Token.TokenType.END} after expression parsing, found {GetCurrent().Type} instead.");
@@ -33,52 +33,52 @@ namespace ExpressionInterpreter
             return expression;
         }
         
-        public Expression ParseAddSubtract()
+        public AExpression ParseAddSubtract()
         {
-            Expression node = ParseMultiplyDivideModulo();
+            AExpression node = ParseMultiplyDivideModulo();
 
             while (GetCurrent().Type == Token.TokenType.PLUS || GetCurrent().Type == Token.TokenType.MINUS)
             {
                 string op = GetCurrent().Value;
                 Next();
-                Expression right = ParseMultiplyDivideModulo();
+                AExpression right = ParseMultiplyDivideModulo();
                 node = new ExpressionBinary(node, right, op);
             }
 
             return node;
         }
 
-        private Expression ParseMultiplyDivideModulo()
+        private AExpression ParseMultiplyDivideModulo()
         {
-            Expression node = ParseExponent();
+            AExpression node = ParseExponent();
 
             while (GetCurrent().Type == Token.TokenType.MULTIPLY || GetCurrent().Type == Token.TokenType.DIVIDE || GetCurrent().Type == Token.TokenType.MODULO)
             {
                 string op = GetCurrent().Value;
                 Next();
-                Expression right = ParseExponent();
+                AExpression right = ParseExponent();
                 node = new ExpressionBinary(node, right, op);
             }
 
             return node;
         }
 
-        private Expression ParseExponent()
+        private AExpression ParseExponent()
         {
-            Expression node = ParseLeaf();
+            AExpression node = ParseLeaf();
 
             while (GetCurrent().Type == Token.TokenType.POWER)
             {
                 string op = GetCurrent().Value;
                 Next();
-                Expression right = ParseLeaf();
+                AExpression right = ParseLeaf();
                 node = new ExpressionBinary(node, right, op);
             }
 
             return node;
         }
         
-        private Expression ParseLeaf()
+        private AExpression ParseLeaf()
         {
             switch (GetCurrent().Type)
             {
@@ -103,7 +103,7 @@ namespace ExpressionInterpreter
                     if (GetCurrent().Type == Token.TokenType.OPEN_PARENTHESIS)
                     {
                         Next();
-                        List<Expression> args = new List<Expression>();
+                        List<AExpression> args = new List<AExpression>();
                         
                         if (GetCurrent().Type != Token.TokenType.CLOSE_PARENTHESIS)
                         {
@@ -126,7 +126,7 @@ namespace ExpressionInterpreter
                 
                 case Token.TokenType.OPEN_PARENTHESIS:
                     Next();
-                    Expression expression = ParseAddSubtract();
+                    AExpression expression = ParseAddSubtract();
                     Next();
                     return expression;
                 

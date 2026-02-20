@@ -2,17 +2,17 @@
 {
 	using System;
 	
-	public class ExpressionBinary : Expression
+	public class ExpressionBinary : AExpression
 	{
-		public ExpressionBinary(Expression left, Expression right, string op)
+		public ExpressionBinary(AExpression left, AExpression right, string op)
 		{
 			Left = left;
 			Right = right;
 			Operator = op;
 		}
         
-		public readonly Expression Left;
-		public readonly Expression Right;
+		public readonly AExpression Left;
+		public readonly AExpression Right;
 		public readonly string Operator;
 
 		public override double Evaluate(EvaluationContext context)
