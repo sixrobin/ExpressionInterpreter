@@ -14,7 +14,7 @@
 		
 		public override double Evaluate(EvaluationContext context)
 		{
-			if (context.Variables.TryGetValue(Value, out double value))
+			if (context.Variables != null && context.Variables.TryGetValue(Value, out double value))
 				return value;
 
 			if (context.Object != null)
