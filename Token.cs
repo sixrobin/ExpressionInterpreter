@@ -16,6 +16,9 @@ namespace ExpressionInterpreter
             CLOSE_PARENTHESIS,
             COMMA,
             END,
+            LESS,
+            GREATER,
+            EQUAL,
         }
     
         public Token(TokenType type, string value)
@@ -26,5 +29,10 @@ namespace ExpressionInterpreter
     
         public TokenType Type { get; }
         public string Value { get; }
+
+        public bool IsComparison()
+        {
+            return Type == TokenType.LESS || Type == TokenType.GREATER || Type == TokenType.EQUAL;
+        }
     }
 }

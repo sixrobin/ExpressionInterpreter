@@ -6,23 +6,18 @@
     {
         public void Run()
         {
-            Lexer lexer = new Lexer("randi(1, 3)");
+            Lexer lexer = new Lexer("(2 * 4) < (B + 3)");
             List<Token> tokens = lexer.Tokenize();
             Parser parser = new Parser(tokens);
             AExpression expression = parser.Parse();
             
-            EvaluationContext context = new()
+            double result1 = expression.Evaluate(new EvaluationContext()
             {
                 Object = new TestContext(),
-                Variables = new Dictionary<string, double>
-                {
-                    { "b", 3 },
-                },
-            };
-
-            double result1 = expression.Evaluate(new EvaluationContext() {
-                Object = new TestContext(),
-                Variables = new Dictionary<string, double>(),
+                // Variables = new Dictionary<string, double>()
+                // {
+                //     { "b", 1 },
+                // },
             });
             
             Godot.GD.Print("Test 1: " + result1);
@@ -33,6 +28,6 @@
 
     public class TestContext
     {
-        public int B { get; set; } = 3;
+        public int B { get; set; } = 6;
     }
 }

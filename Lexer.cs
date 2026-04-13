@@ -18,6 +18,9 @@ namespace ExpressionInterpreter
             {'(', new Token(Token.TokenType.OPEN_PARENTHESIS, "(")},
             {')', new Token(Token.TokenType.CLOSE_PARENTHESIS, ")")},
             {',', new Token(Token.TokenType.COMMA, ",")},
+            {'<', new Token(Token.TokenType.LESS, "<")},
+            {'>', new Token(Token.TokenType.GREATER, ">")},
+            {'=', new Token(Token.TokenType.EQUAL, "=")},
         };
         
         public Lexer(string text)

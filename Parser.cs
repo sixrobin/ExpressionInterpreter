@@ -1,6 +1,7 @@
 namespace ExpressionInterpreter
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
 
     public class Parser
@@ -25,15 +26,34 @@ namespace ExpressionInterpreter
         
         public AExpression Parse()
         {
-            AExpression expression = ParseAddSubtract();
+            AExpression expression = ParseComparison();
 
             if (GetCurrent().Type != Token.TokenType.END)
                 throw new Exception($"Expected {Token.TokenType.END} after expression parsing, found {GetCurrent().Type} instead.");
 
+            int comparisonTokensCount = _tokens.Count(o => o.IsComparison());
+            if (comparisonTokensCount > 1)
+                throw new Exception($"Expression cannot have more than one comparison token found {comparisonTokensCount}.");
+
             return expression;
         }
-        
-        public AExpression ParseAddSubtract()
+
+        private AExpression ParseComparison()
+        {
+            AExpression node = ParseAddSubtract();
+
+            while (GetCurrent().IsComparison())
+            {
+                string op = GetCurrent().Value;
+                Next();
+                AExpression right = ParseAddSubtract();
+                node = new ExpressionBinary(node, right, op);
+            }
+
+            return node;
+        }
+
+        private AExpression ParseAddSubtract()
         {
             AExpression node = ParseMultiplyDivideModulo();
 
