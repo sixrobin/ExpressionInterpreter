@@ -9,7 +9,7 @@
 
 		public readonly string Value;
 		
-		public override double Evaluate(EvaluationContext context)
+		public override double EvaluateToDouble(EvaluationContext context)
 		{
 			return double.Parse(Value, System.Globalization.CultureInfo.InvariantCulture);
 		}

@@ -6,12 +6,12 @@
     {
         public void Run()
         {
-            Lexer lexer = new Lexer("(2 * 4) < (B + 3)");
+            Lexer lexer = new Lexer("B - 9 < 7");
             List<Token> tokens = lexer.Tokenize();
             Parser parser = new Parser(tokens);
             AExpression expression = parser.Parse();
             
-            double result1 = expression.Evaluate(new EvaluationContext()
+            bool result1 = expression.EvaluateToBool(new EvaluationContext()
             {
                 Object = new TestContext(),
                 // Variables = new Dictionary<string, double>()
@@ -22,7 +22,11 @@
             
             Godot.GD.Print("Test 1: " + result1);
             
-            Godot.GD.Print("Test 2: " + new Expression("randi(10, 30)").Evaluate());
+            Godot.GD.Print("Test 2: " + new Expression("randi(10, 30)").EvaluateToDouble());
+            
+            Godot.GD.Print("Test 3: " + new Expression("4 < 5").EvaluateToBool());
+            Godot.GD.Print("Test 4: " + new Expression("4 = 5").EvaluateToBool());
+            Godot.GD.Print("Test 5: " + new Expression("4 > 5").EvaluateToBool());
         }
     }
 

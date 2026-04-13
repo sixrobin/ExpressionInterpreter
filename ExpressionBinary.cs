@@ -15,10 +15,10 @@
 		public readonly AExpression Right;
 		public readonly string Operator;
 
-		public override double Evaluate(EvaluationContext context)
+		public override double EvaluateToDouble(EvaluationContext context)
 		{
-			double left = Left.Evaluate(context);
-			double right = Right.Evaluate(context);
+			double left = Left.EvaluateToDouble(context);
+			double right = Right.EvaluateToDouble(context);
 			
 			return Operator switch
 			{

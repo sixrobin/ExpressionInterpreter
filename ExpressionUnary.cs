@@ -13,12 +13,12 @@
 		public readonly AExpression Right;
 		public readonly string Sign;
 		
-		public override double Evaluate(EvaluationContext context)
+		public override double EvaluateToDouble(EvaluationContext context)
 		{
 			return Sign switch
 			{
-				"+" => Right.Evaluate(context),
-				"-" => -Right.Evaluate(context),
+				"+" => Right.EvaluateToDouble(context),
+				"-" => -Right.EvaluateToDouble(context),
 				_   => throw new Exception($"Unknown sign {Sign} to evaluate {nameof(ExpressionUnary)}."),
 			};
 		}

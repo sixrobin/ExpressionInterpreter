@@ -12,10 +12,10 @@ namespace ExpressionInterpreter
         
         public readonly string Value;
         
-        public override double Evaluate(EvaluationContext context)
+        public override double EvaluateToDouble(EvaluationContext context)
         {
             AExpression expression = new Parser(new Lexer(Value).Tokenize()).Parse();
-            return expression.Evaluate(context);
+            return expression.EvaluateToDouble(context);
         }
     }
 }

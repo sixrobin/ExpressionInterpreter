@@ -12,7 +12,7 @@
         
 		public readonly string Value;
 		
-		public override double Evaluate(EvaluationContext context)
+		public override double EvaluateToDouble(EvaluationContext context)
 		{
 			if (context.Variables != null && context.Variables.TryGetValue(Value, out double value))
 				return value;
